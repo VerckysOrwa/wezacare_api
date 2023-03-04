@@ -1,0 +1,6 @@
+
+GET http://localhost:3333/questions
+
+###
+GET http://localhost:3333/questions/6403140ee8e776077fae327b
+

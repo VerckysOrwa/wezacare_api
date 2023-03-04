@@ -1,0 +1,30 @@
+
+POST http://localhost:3333/auth/register HTTP/1.1
+content-type: application/json
+
+
+{
+    "username":"verckys",
+    "email":"verckysorwa@gmail.com",
+    "password":"hiberishjiberishpasswordldncs"
+}
+
+###
+
+POST http://localhost:3333/auth/login HTTP/1.1
+content-type: application/json
+
+{
+    "email":"verckysorwa@gmail.com",
+    "password":"hiberishjiberishpasswordldncs"
+}
+
+
+###
+POST http://localhost:3333/questions HTTP/1.1
+content-type: application/json
+
+{
+    "user_question":"how can i fix this error: error 1234567"
+    
+}

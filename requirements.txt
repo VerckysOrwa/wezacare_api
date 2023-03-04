@@ -1,0 +1,42 @@
+//UWEZO API PLANNING/MY REQUIREMENTS
+
+/MODELS
+1.user model
+2.questions model
+
+/NPM PACKAGES
+express
+mongoose
+bcrypt
+nodemon
+
+
+
+/METHODS (POST)
+register user - done
+login user - done
+post question- done
+post answer to a question -
+
+
+/METHODS (GET)
+get all questions - done
+get a specific question based on ID - done
+
+
+
+
+//FUNCTIONALITIES
+authentication - done
+register user- done
+login user - done
+post question - done
+get all questions - done
+
+
+
+REMAINING 
+post an answer to a question
+delete a question
+update an answer
+delete an answer
