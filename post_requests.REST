@@ -28,3 +28,19 @@ content-type: application/json
     "user_question":"how can i fix this error: error 1234567"
     
 }
+
+###
+POST http://localhost:3333/questions/64074292bd8b55bf9abdd555/answers HTTP/1.1
+content-type: application/json
+
+{
+  "user_answer":"mfenriononvreou"
+}
+
+###
+POST http://localhost:3333/questions/640766587028991af3f3638f/answers HTTP/1.1
+content-type: application/json
+
+{
+  "user_answer":"You can find the link to the question on my latest tweet"
+}

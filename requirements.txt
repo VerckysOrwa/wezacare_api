@@ -16,7 +16,7 @@ nodemon
 register user - done
 login user - done
 post question- done
-post answer to a question -
+post answer to a question - DONE
 
 
 /METHODS (GET)
@@ -24,6 +24,11 @@ get all questions - done
 get a specific question based on ID - done
 
 
+//METHODS (delete)
+delete a question - DONE
+
+
+//METHODS (PUT)
 
 
 //FUNCTIONALITIES
@@ -32,11 +37,11 @@ register user- done
 login user - done
 post question - done
 get all questions - done
+delete a question- done
+posting an answer to a question - done
+
 
 
 
 REMAINING 
-post an answer to a question
-delete a question
 update an answer
-delete an answer

@@ -49,10 +49,8 @@ const auth=(req,res,next)=>{
     }
 }
 
-//register route
 app.post("/auth/register",async(req,res)=>{
     const{username,email,password}=req.body
-        //information goes to the users collection
 const user=userModel
 const person=await user.findOne({email})
 
@@ -74,10 +72,8 @@ await user.insertMany({
 }
 })
 
-//login route
 app.post('/auth/login',async(req,res)=>{
     const {email,password}=req.body
-    //information goes to the database
     const user=userModel
     const person=await user.findOne({email})
     
@@ -98,14 +94,10 @@ app.post('/auth/login',async(req,res)=>{
 
 })
 
-//post question route
-// NB: only authenticated users will be able to use this route
-// a middleware called auth should therefore be created
 app.post('/questions',auth,async(req,res)=>{
 const user_question=req.body.user_question
 const posted_by=req.session.username
 const question=questionsModel
-    //information goes to the questions collection
 await question.insertMany({
     question:user_question,
     posted_by
@@ -115,29 +107,42 @@ await question.insertMany({
 
 })
 
-// post answer route to a  quetion
-// this is like entering comments
-app.post('/questions/:id/answers',auth,(req,res)=>{
-    const id=req.param.id
-    const user_answer=req.body.user_answer
-    // goes to the answers collection
+app.post('/questions/:id/answers',auth,async(req,res)=>{
+    const id=req.params.id
+    const answer={
+        user_answer:await req.body.user_answer,
+        posted_by:req.session.username
+    }
+	if (ObjectId.isValid(id)) {
+		questionsModel.findByIdAndUpdate(
+			id,
+			{ $push: { answers: answer } },
+			{ new: true }
+		)
+			.populate("answers.posted_by", "_id username")
+			.then((result)=>{
+					res.send(result);
+				
+            }).catch((err)=>{
+                console.log(err)
+            })
+				
+			
+	} else {
+		res.send(404, "<h3>Invalid request</h4>");
+	}
 })
 
 
 
-//get all questions route
 app.get('/questions',async(req,res)=>{
-    //select all questions from the questions collection
     const questions=questionsModel;
     await questions.find().then((result)=>{
         res.send(result)
     })
 })
 
-//fetch a specific question route
 app.get('/questions/:id',async(req,res)=>{
-        //select all questions from the questions collection based on the id param
-//the question should also come with the all answers provide to it
 const id=req.params.id;
 const question=questionsModel
 if (ObjectId.isValid(id)){
@@ -148,10 +153,39 @@ if (ObjectId.isValid(id)){
 })
 
 
-
-app.delete('/questions/:id',auth,(req,res)=>{
+app.put("/questions/:question_id/answers/:answer_id",async(req,res)=>{
+    const {question_id,answer_id}=req.params
+    const updated_answer={
+        user_answer:await req.body.user_answer,
+posted_by:req.session.username
+    }
+    if (ObjectId.isValid(question_id,answer_id)) {
+		questionsModel.findByIdAndUpdate(
+			question_id,
+			{ $push: { answers:{updated_answer}} },
+			{ new: true }
+		)
+			.then((result) => {
+					console.log(result);
+					res.send(result);
+			}).catch((err)=>{
+                console.log(err)
+            })
+	} else {
+		res.send(404, "<h3>Invalid request</h4>");
+	}
 
 })
+
+app.delete('/questions/:id',auth,async(req,res)=>{
+const question_id=req.params.id
+if(ObjectId.isValid(question_id)){
+    await questionsModel.deleteOne({_id:question_id}).then((result)=>{
+res.send({result,message:"Deleted successfully"})
+    })
+}
+})
+
 
 
 
