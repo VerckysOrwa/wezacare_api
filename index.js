@@ -16,14 +16,14 @@ const { ObjectId } = require("mongodb");
 app.use(express.urlencoded({extended:true}))
 app.use(express.json());
 
-mongoose.connect(process.env.DB_CONNECTION_STRING,{
+mongoose.connect(process.env.ONLINE_DB_STRING||"mongodb+srv://verckysorwa:80dmCefeEE0m6HO7@cluster0.22lpjly.mongodb.net/?retryWrites=true&w=majority",{
     useUnifiedTopology:true,
     useNewUrlParser:true,
 }).then(()=>console.log('db connection successfully established'))
 .catch((err)=>console.log(err))
 
 const store = new mongoSession({
-	uri: process.env.DB_CONNECTION_STRING,
+	uri: process.env.ONLINE_DB_STRING||"mongodb+srv://verckysorwa:80dmCefeEE0m6HO7@cluster0.22lpjly.mongodb.net/?retryWrites=true&w=majority",
 	collection: "usersessions",
 });
 
